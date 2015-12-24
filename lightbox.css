@@ -24,8 +24,8 @@ div#lightbox:nth-child(n) {
     filter: none;
 }
 
-div#lightbox.hide{
-  display: none;
+.hide{
+  display: none !important;
 }
 
 div#lightbox div#lightbox-content{
@@ -33,7 +33,7 @@ div#lightbox div#lightbox-content{
   top: 50%;
   left: 50%;
   display: block;
-  background: #E8E8E8;
+  background: #ffffff;
   padding: 10px;
   border-radius: 10px;
 }
@@ -48,4 +48,23 @@ div#lightbox p#lightbox-title{
 }
 
 div#lightbox img#lightbox-photo{
+}
+
+div#lightbox div#lightbox-content div#lightbox-left-arrow{
+  display: block;
+  background-image: url('img/arrow-left.png');
+  width: 33px;
+  height: 43px;
+  position: absolute;
+  left: 10px;
+  cursor: pointer;
+}
+
+div#lightbox div#lightbox-content div#lightbox-right-arrow{
+  background-image: url('img/arrow-right.png');
+  width: 33px;
+  height: 43px;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
 }
