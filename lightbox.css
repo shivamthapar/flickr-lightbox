@@ -27,8 +27,24 @@ div#lightbox.hide{
   display: none;
 }
 
-div#lightbox img#lightbox-photo{
+div#lightbox div#lightbox-content{
   position: absolute;
   top: 50%;
   left: 50%;
+  display: block;
+  background: #E8E8E8;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+div#lightbox p#lightbox-title{
+  text-align: center;
+  color: #484848;
+  font-size: 18px;
+  font-family: 'Arial';
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+div#lightbox img#lightbox-photo{
 }

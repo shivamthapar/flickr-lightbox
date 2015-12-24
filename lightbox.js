@@ -49,25 +49,18 @@ Flickr.prototype = (function(){
 
 var Lightbox = function(photos, parentElem){
   // private members
+  var self = this;
   this.photos = photos;
   this.parentElem = parentElem;
   this.visible = false;
   this.currIndex = 0;
+  this.photoElem = null;
+  this.titleElem = null;
 
   this.displayCurrPhoto = function(){
-    var photo;
-    if(!this.elem.firstChild){
-      photo = document.createElement("img");
-      photo.setAttribute("id", "lightbox-photo");
-      this.elem.appendChild(photo);
-    }
-    else{
-      photo = this.elem.firstChild;
-    }
-    photo.setAttribute("src", this.photos[this.currIndex].url);
+    this.setPhotoElem(this.photos[this.currIndex].url);
+    this.setTitleElem(this.photos[this.currIndex].title);
     this.setVisible(true);
-    photo.onload = this.onPhotoLoadHandler;
-    console.log(photo);
   }
 
   this.setVisible = function(b){
@@ -86,14 +79,42 @@ var Lightbox = function(photos, parentElem){
     this.elem.setAttribute("id", "lightbox");
     this.setVisible(this.visible);
     parentElem.appendChild(this.elem);
+    this.createContentElem();
+  }
+
+  // TODO: abstract logic for creating photo elem, and add title to photo
+
+  this.createContentElem = function(){
+    this.contentElem = document.createElement("div");
+    this.contentElem.setAttribute("id", "lightbox-content");
+    this.elem.appendChild(this.contentElem);
+  }
+
+  this.setPhotoElem = function(url){
+    if(!this.photoElem){
+      this.photoElem = document.createElement("img");
+      this.photoElem.setAttribute("id", "lightbox-photo");
+    }
+    this.photoElem.setAttribute("src", url);
+    this.photoElem.onload = this.onPhotoLoadHandler;
+    this.contentElem.appendChild(this.photoElem);
+  }
+
+  this.setTitleElem = function(text){
+    if(!this.titleElem){
+      this.titleElem = document.createElement("p");
+      this.titleElem.setAttribute("id", "lightbox-title");
+    }
+    this.titleElem.textContent = text;
+    this.contentElem.appendChild(this.titleElem);
   }
 
   this.onPhotoLoadHandler = function(){
     // center picture
-    this.style.width = this.width;
-    this.style.height = this.height;
-    this.style.marginTop = "-" + this.height/2 + "px";
-    this.style.marginLeft = "-" + this.width/2 + "px";
+    console.log("pic width: ", this.width);
+    console.log("div width: ", self.contentElem);
+    self.contentElem.style.marginTop = "-" + this.height/2 + "px";
+    self.contentElem.style.marginLeft = "-" + this.width/2 + "px";
   }
 
   this.createLightboxElem();
