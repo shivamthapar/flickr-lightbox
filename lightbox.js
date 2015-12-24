@@ -56,21 +56,34 @@ var Lightbox = function(photos, parentElem){
   this.currIndex = 0;
   this.photoElem = null;
   this.titleElem = null;
+  this.leftElem = null;
+  this.rightElem = null;
 
   this.displayCurrPhoto = function(){
     this.setPhotoElem(this.photos[this.currIndex].url);
     this.setTitleElem(this.photos[this.currIndex].title);
-    this.setVisible(true);
+
+    if(this.currIndex === 0)
+      this.setVisible(this.leftElem,false);
+    else
+      this.setVisible(this.leftElem,true);
+
+    if(this.currIndex === this.photos.length-1)
+      this.setVisible(this.rightElem,false);
+    else
+      this.setVisible(this.rightElem,true);
+
+    this.setVisible(this.elem,true);
   }
 
-  this.setVisible = function(b){
+  this.setVisible = function(elem,b){
     this.visible = b;
     if(!this.visible){
-      if(this.elem.getAttribute("class") !== "hide")
-        this.elem.setAttribute("class", "hide");
+      if(elem.getAttribute("class") !== "hide")
+        elem.setAttribute("class", "hide");
     }
     else{
-      this.elem.setAttribute("class","");
+      elem.setAttribute("class","");
     }
   }
 
@@ -78,7 +91,7 @@ var Lightbox = function(photos, parentElem){
     this.elem = document.createElement("div");
     this.elem.setAttribute("id", "lightbox");
     this.elem.addEventListener("click", this.lightboxClickHandler);
-    this.setVisible(this.visible);
+    this.setVisible(this.elem,this.visible);
     parentElem.appendChild(this.elem);
     this.createContentElem();
   }
@@ -88,6 +101,14 @@ var Lightbox = function(photos, parentElem){
   this.createContentElem = function(){
     this.contentElem = document.createElement("div");
     this.contentElem.setAttribute("id", "lightbox-content");
+    
+    this.leftElem = document.createElement("div");
+    this.leftElem.setAttribute("id", "lightbox-left-arrow");
+    this.contentElem.appendChild(this.leftElem);
+    this.rightElem = document.createElement("div");
+    this.rightElem.setAttribute("id", "lightbox-right-arrow");
+    this.contentElem.appendChild(this.rightElem);
+
     this.elem.appendChild(this.contentElem);
   }
 
@@ -116,10 +137,19 @@ var Lightbox = function(photos, parentElem){
     console.log("div width: ", self.contentElem);
     self.contentElem.style.marginTop = "-" + this.height/2 + "px";
     self.contentElem.style.marginLeft = "-" + this.width/2 + "px";
+    console.log(self.leftElem);
+    self.leftElem.style.top = this.height/2+"px";
+    self.rightElem.style.top = this.height/2+"px";
   }
 
   this.lightboxClickHandler = function(e){
     switch(e.target.id){
+      case "lightbox-left-arrow":
+        self.setCurrIndex(self.currIndex-1);
+        break;
+      case "lightbox-right-arrow":
+        self.setCurrIndex(self.currIndex+1);
+        break;
       case "lightbox-photo":
         break;
       case "lightbox-title":
@@ -127,7 +157,7 @@ var Lightbox = function(photos, parentElem){
       case "lightbox-content":
         break;
       default: // outside lightbox-contentElem
-        self.setVisible(false);
+        self.setVisible(self.elem,false);
         break;
     }
   }
@@ -137,6 +167,7 @@ var Lightbox = function(photos, parentElem){
 Lightbox.prototype = (function(){
   return {
     setCurrIndex: function(idx){
+      if(idx < 0 || idx >= this.photos.length) return;
       this.currIndex = idx;
       this.displayCurrPhoto();
     },
