@@ -77,6 +77,7 @@ var Lightbox = function(photos, parentElem){
   this.createLightboxElem = function(){
     this.elem = document.createElement("div");
     this.elem.setAttribute("id", "lightbox");
+    this.elem.addEventListener("click", this.lightboxClickHandler);
     this.setVisible(this.visible);
     parentElem.appendChild(this.elem);
     this.createContentElem();
@@ -117,6 +118,20 @@ var Lightbox = function(photos, parentElem){
     self.contentElem.style.marginLeft = "-" + this.width/2 + "px";
   }
 
+  this.lightboxClickHandler = function(e){
+    switch(e.target.id){
+      case "lightbox-photo":
+        break;
+      case "lightbox-title":
+        break;
+      case "lightbox-content":
+        break;
+      default: // outside lightbox-contentElem
+        self.setVisible(false);
+        break;
+    }
+  }
+
   this.createLightboxElem();
 }
 Lightbox.prototype = (function(){
@@ -126,6 +141,7 @@ Lightbox.prototype = (function(){
       this.displayCurrPhoto();
     },
     setVisible: this.setVisible
+
   };
 }());
 
