@@ -1,17 +1,17 @@
 var Flickr = function(key){
   this.apiKey = key;
-  this.getUrlForQuery = function(user){
-    var url = "https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=";
+  this.getUrlForQuery = function(user,photoset){
+    var url = "https://api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key=";
     url+=this.apiKey;
-    url+="&user_id="+user+"&format=json&per_page=20&nojsoncallback=?";
+    url+="&user_id="+user+"&photoset_id="+photoset+"&format=json&per_page=20&nojsoncallback=?";
     return url;
   }
 }
 Flickr.prototype = (function(){
   return {
-    getImagesForUser: function(user, callback){
+    getImages: function(user, photoset, callback){
       var self = this;
-      var url = this.getUrlForQuery(user);
+      var url = this.getUrlForQuery(user,photoset);
       var request = new XMLHttpRequest();
       request.open('GET', url, true);
 
@@ -20,7 +20,7 @@ Flickr.prototype = (function(){
           // Success!
           var data = JSON.parse(request.responseText);
           var photos = [];
-          data.photos.photo.forEach(function(photo){
+          data.photoset.photo.forEach(function(photo){
             var p = {};
             p.title = photo.title;
             p.thumb = self.getImageUrl(photo.farm,photo.server,photo.id, photo.secret,true);
@@ -33,7 +33,7 @@ Flickr.prototype = (function(){
 
       request.onerror = function() {
         // There was a connection error of some sort
-        console.log(false, {});
+        callback(false, {});
       };
       request.send();
     },
@@ -53,11 +53,12 @@ var Lightbox = (function(window) {
   function Lightbox(divId, flickrApiKey) {
     this.div = document.getElementById(divId);
     this.flickrUser = this.div.getAttribute('data-flickr-user');
+    this.flickrPhotoset = this.div.getAttribute('data-flickr-photoset');
     this.images = [];
     this.flickr = new Flickr(flickrApiKey);
 
-    this.fetchImages = function(user){
-      this.flickr.getImagesForUser(user, function(success, data){
+    this.fetchImages = function(user,photoset){
+      this.flickr.getImages(user, photoset, function(success, data){
         if(success){
           console.log(data);
         }
@@ -69,7 +70,7 @@ var Lightbox = (function(window) {
 
     this.addImage = function(){
     };
-    this.fetchImages(this.flickrUser);
+    this.fetchImages(this.flickrUser,this.flickrPhotoset);
 
   }
 
