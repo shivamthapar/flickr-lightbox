@@ -54,14 +54,21 @@ var Lightbox = function(photos, parentElem){
   this.parentElem = parentElem;
   this.visible = false;
   this.currIndex = 0;
+  this.isLoading = true;
   this.photoElem = null;
   this.titleElem = null;
+  this.spinnerElem = null;
   this.leftElem = null;
   this.rightElem = null;
+  this.imgWrapper = null;
 
   this.displayCurrPhoto = function(){
     this.setPhotoElem(this.photos[this.currIndex].url);
     this.setTitleElem(this.photos[this.currIndex].title);
+    this.createImgWrapper();
+
+
+    this.addClass(this.contentElem, "preload");
 
     if(this.currIndex === 0)
       this.setVisible(this.leftElem,false);
@@ -87,6 +94,20 @@ var Lightbox = function(photos, parentElem){
     }
   }
 
+  this.hasClass = function(elem, cls){
+    var regex = new RegExp("\\b" + cls + "\\b");
+    return !!(elem.className.match(regex, ""));
+  }
+  this.addClass = function(elem, cls){
+    if(this.hasClass(elem, cls)) return;
+    elem.className += " " + cls;
+  }
+  this.removeClass = function(elem, cls){
+    console.log("remove class called");
+    var regex = new RegExp("\\b" + cls + "\\b");
+    elem.className = elem.className.replace(regex, "")
+  }
+
   this.createLightboxElem = function(){
     this.elem = document.createElement("div");
     this.elem.setAttribute("id", "lightbox");
@@ -95,8 +116,6 @@ var Lightbox = function(photos, parentElem){
     parentElem.appendChild(this.elem);
     this.createContentElem();
   }
-
-  // TODO: abstract logic for creating photo elem, and add title to photo
 
   this.createContentElem = function(){
     this.contentElem = document.createElement("div");
@@ -109,7 +128,21 @@ var Lightbox = function(photos, parentElem){
     this.rightElem.setAttribute("id", "lightbox-right-arrow");
     this.contentElem.appendChild(this.rightElem);
 
+    this.spinnerElem = document.createElement("div");
+    this.spinnerElem.setAttribute("id", "lightbox-spinner");
+    this.contentElem.appendChild(this.spinnerElem);
+
     this.elem.appendChild(this.contentElem);
+  }
+
+  this.createImgWrapper = function(){
+    if(!this.imgWrapper){
+      this.imgWrapper = document.createElement("div");
+      this.imgWrapper.setAttribute("id", "lightbox-img-wrapper");
+      this.imgWrapper.appendChild(this.photoElem);
+      this.imgWrapper.appendChild(this.titleElem);
+      this.contentElem.appendChild(this.imgWrapper);
+    }
   }
 
   this.setPhotoElem = function(url){
@@ -119,7 +152,7 @@ var Lightbox = function(photos, parentElem){
     }
     this.photoElem.setAttribute("src", url);
     this.photoElem.onload = this.onPhotoLoadHandler;
-    this.contentElem.appendChild(this.photoElem);
+    // TODO: add loader gif
   }
 
   this.setTitleElem = function(text){
@@ -128,13 +161,13 @@ var Lightbox = function(photos, parentElem){
       this.titleElem.setAttribute("id", "lightbox-title");
     }
     this.titleElem.textContent = text;
-    this.contentElem.appendChild(this.titleElem);
   }
 
   this.onPhotoLoadHandler = function(){
     // center picture
     console.log("pic width: ", this.width);
     console.log("div width: ", self.contentElem);
+    self.removeClass(self.contentElem, "preload");
     self.contentElem.style.marginTop = "-" + this.height/2 + "px";
     self.contentElem.style.marginLeft = "-" + this.width/2 + "px";
     console.log(self.leftElem);
