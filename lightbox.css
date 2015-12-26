@@ -92,6 +92,8 @@ div#lightbox div#lightbox-content div#lightbox-spinner{
 div#lightbox div#lightbox-content.preload{
   width: 250px;
   height: 250px;
+  margin-left: -125px;
+  margin-top: -125px;
 }
 div#lightbox div#lightbox-content.preload img#lightbox-photo{
   display: none;
