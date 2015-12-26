@@ -1,7 +1,22 @@
+/**
+ * Flickr is a class to interact with the Flickr API. It can be used
+ * to fetch photos from a Flickr photoset.
+ *
+ * @constructor
+ * @param {string} key Flickr API key
+ */
 function Flickr(key) {
   this.apiKey = key;
 };
 
+/**
+ * getUrlForQuery gets the URL of the Flickr API call to fetch a
+ * user's photoset
+ *
+ * @param {string} user Flickr ID of user who owns the photoset
+ * @param {string} photoset Flickr photoset id
+ * @returns {string} URL of API call to fetch photoset
+ */
 Flickr.prototype.getUrlForQuery = function getUrlForQuery(user, photoset) {
   return 'https://api.flickr.com/services/rest/?&method=flickr.photosets.getPhotos&api_key='
           + this.apiKey
@@ -10,6 +25,18 @@ Flickr.prototype.getUrlForQuery = function getUrlForQuery(user, photoset) {
           + '&format=json&nojsoncallback=?';
 }
 
+/**
+ * getImageUrl gets the URL at which a Flickr photo can be found, given
+ * its farm, server, id, and secret (which are returned by the Flickr API).
+ * See https://www.flickr.com/services/api/misc.urls.html
+ *
+ * @param {string} farm Flickr farm id
+ * @param {string} server Flickr server id
+ * @param {string} id Flickr photo id
+ * @param {string} secret Flickr photo secret
+ * @param {bool} thumb is the image a thumbnail?
+ * @returns {string} URL of photo
+ */
 Flickr.prototype.getImageUrl = function getImageUrl(farm, server, id, secret, thumb){
   var url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret;
   if(thumb) url += '_s';
@@ -17,6 +44,13 @@ Flickr.prototype.getImageUrl = function getImageUrl(farm, server, id, secret, th
   return url;
 }
 
+/**
+ * getImages fetches all photos from a Flickr user's photoset
+ *
+ * @param {string} user Flickr user id
+ * @param {string} photoset Flickr photoset id
+ * @param {getImagesCallback} callback Called on success or failure of getImages
+ */
 Flickr.prototype.getImages = function getImages(user, photoset, callback) {
   var _this = this;
   var url = this.getUrlForQuery(user,photoset);
@@ -48,6 +82,14 @@ Flickr.prototype.getImages = function getImages(user, photoset, callback) {
   request.send();
 }
 
+/**
+ * Lightbox represents the lightbox component. It displays a picture, has left and rightElem
+ * arrows to navigate between pictures and shows a preloader while an image is loading.
+ *
+ * @constructor
+ * @param {Photo[]} photos Array of Photos for lightbox
+ * @param {DOMElement} parentElem Lightbox will be created as a child element of this DOM Element
+ */
 function Lightbox(photos, parentElem) {
 
   /* Data Members */
@@ -65,6 +107,11 @@ function Lightbox(photos, parentElem) {
   this.imgWrapper = null;
 
   /* Event Handlers */
+
+  /**
+   * Lightbox.onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded
+   *
+   */
   this.onPhotoLoadHandler = function onPhotoLoadHandler() {
     _this._removeClass(_this.contentElem, "preload");
     _this.contentElem.style.marginTop = "-" + this.height/2 + "px";
@@ -73,6 +120,13 @@ function Lightbox(photos, parentElem) {
     _this.rightElem.style.top = this.height/2+"px";
   };
 
+  /**
+   * Lightbox.onClickHandler handles what happens when the Lightbox is clicked. If the arrows 
+   * are clicked, the next or previous picture is displayed. If the dark area (outside
+   * the Lightbox content) is clicked, the Lightbox is hidden.
+   *
+   * @param {Event} e Click event
+   */
   this.onClickHandler = function onClickHandler(e) {
     switch(e.target.id){
       case "lightbox-left-arrow":
@@ -99,13 +153,22 @@ function Lightbox(photos, parentElem) {
   this._createLightboxElem();
 }
 
-/* Public Functions */
+/**
+ * setCurrIndex sets the index of the picture to be displayed.
+ *
+ * @param {number} idx Index of photo to display
+ */
 Lightbox.prototype.setCurrIndex = function setCurrIndex(idx){
   console.log("called: ", idx);
   if(idx < 0 || idx >= this.photos.length) return;
   this.currIndex = idx;
 }
 
+/**
+ * displayCurrPhoto displays current photo and title in the Lightbox
+ * and makes the Lightbox visible.
+ *
+ */
 Lightbox.prototype.displayCurrPhoto = function displayCurrPhoto() {
   this._setPhotoElem(this.photos[this.currIndex].url);
   this._setTitleElem(this.photos[this.currIndex].title);
@@ -196,6 +259,15 @@ Lightbox.prototype._removeClass = function _removeClass(elem, cls) {
   elem.className = elem.className.replace(regex, "")
 }
 
+/**
+ * Gallery creates a gallery in the div withthe specified ID. It displays
+ * all the photos from the Flickr photoset of a user, which are specified
+ * as attributes 'data-flickr-user' and 'data-flickr-photoset' on the div.
+ *
+ * @constructor
+ * @param {string} divId ID of DOM element to render Gallery in
+ * @param {string} flickrApiKey Flickr API Key
+ */
 function Gallery(divId, flickrApiKey) {
   var _this = this;
   this.div = document.getElementById(divId);
@@ -205,20 +277,31 @@ function Gallery(divId, flickrApiKey) {
   this.flickr = new Flickr(flickrApiKey);
   this.lightbox = null;
 
+  /**
+   * onThumbClickHandler handles when a thumbnail is clicked. It sets the
+   * lightbox to display the fullsize photo for the clicked thumbnail.
+   *
+   */
   this.onThumbClickHandler = function(){
     _this.lightbox.setCurrIndex(parseInt(this.getAttribute("id")));
     _this.lightbox.displayCurrPhoto();
   };
 
-  this._fetchImages(this.flickrUser,this.flickrPhotoset);
+  this.fetchImages();
 }
 
-Gallery.prototype._fetchImages = function _fetchImages(user, photoset) {
+/**
+ * fetchImages fetches photos from the Gallery's photoset. If the API call is 
+ * successful, it creates a grid of thumbnails of the photos. Otherwise, it logs
+ * an error message.
+ *
+ */
+Gallery.prototype.fetchImages = function fetchImages() {
   var _this = this;
-  this.flickr.getImages(user, photoset, function(success, data){
+  this.flickr.getImages(this.flickrUser, this.flickrPhotoset, function(success, data){
     if(success){
       _this.photos = data.photos;
-      _this._createGrid();
+      _this.createGrid();
       _this.lightbox = new Lightbox(_this.photos, _this.div);
     }
     else{
@@ -227,7 +310,13 @@ Gallery.prototype._fetchImages = function _fetchImages(user, photoset) {
   });
 }
 
-Gallery.prototype._createGrid = function _createGrid() {
+/**
+ * createGrid creates a grid of thumbnails of all the gallery's photos, and attaches
+ * it to the DOM. Each thumbnail also has a reference to the url of its fullsize 
+ * photo under the attribute 'data-large'.
+ *
+ */
+Gallery.prototype.createGrid = function createGrid() {
   var _this = this;
   var grid = document.createElement("div");
   grid.setAttribute("id", "lightbox-grid");
@@ -242,3 +331,25 @@ Gallery.prototype._createGrid = function _createGrid() {
   });
   this.div.appendChild(grid);
 };
+
+/*** Documentation Section ***/
+
+/**
+ * Represents a photo from Flickr
+ *
+ * @typedef {Object} Photo
+ * @property {string} title Title or caption of the photos
+ * @property {string} url URL of the fullsize picture
+ * @property {string} thumb URL of the thumbnail
+ */
+
+/**
+ * Callback for getImages
+ *
+ * @callback getImagesCallback
+ * @param {boolean} success True if photos were successfully fetched, false otherwise
+ * @param {Object} data Holds data from API call
+ * @param {Photo[]} data.photos Array of photos of the photoset, if call succeeded
+ * @param {string} data.msg Description of error if API call failed
+ */
+
