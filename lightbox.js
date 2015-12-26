@@ -109,7 +109,9 @@ function Lightbox(photos, parentElem) {
   /* Event Handlers */
 
   /**
-   * Lightbox.onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded
+   * Lightbox.onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded.
+   * Also, the "preload" CSS class is removed from the Lightbox content, hiding the spinner and 
+   * revealing the picture.
    *
    */
   this.onPhotoLoadHandler = function onPhotoLoadHandler() {
@@ -166,7 +168,10 @@ Lightbox.prototype.setCurrIndex = function setCurrIndex(idx){
 
 /**
  * displayCurrPhoto displays current photo and title in the Lightbox
- * and makes the Lightbox visible.
+ * and makes the Lightbox visible. When called, it gives the Lightbox
+ * content the CSS class "preload", which causes the spinner to be 
+ * shown. Then, when the picture is done loading, the onPhotoLoadHandler
+ * removes this class, hiding the spinner and showing the picture.
  *
  */
 Lightbox.prototype.displayCurrPhoto = function displayCurrPhoto() {
@@ -175,6 +180,7 @@ Lightbox.prototype.displayCurrPhoto = function displayCurrPhoto() {
   this._createImgWrapper();
 
   this._addClass(this.contentElem, "preload");
+  this.contentElem.setAttribute("style","");
 
   if(this.currIndex === 0)
     this._addClass(this.leftElem, "hide");
