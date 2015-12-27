@@ -109,7 +109,7 @@ function Lightbox(photos, parentElem) {
   /* Event Handlers */
 
   /**
-   * Lightbox.onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded.
+   * onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded.
    * Also, the "preload" CSS class is removed from the Lightbox content, hiding the spinner and 
    * revealing the picture.
    *
@@ -123,7 +123,7 @@ function Lightbox(photos, parentElem) {
   };
 
   /**
-   * Lightbox.onClickHandler handles what happens when the Lightbox is clicked. If the arrows 
+   * onClickHandler handles what happens when the Lightbox is clicked. If the arrows 
    * are clicked, the next or previous picture is displayed. If the dark area (outside
    * the Lightbox content) is clicked, the Lightbox is hidden.
    *
@@ -147,8 +147,32 @@ function Lightbox(photos, parentElem) {
         break;
       default:
         // outside lightbox-content (i.e. click in the dark area)
+        _this.visible = false;
         _this._addClass(_this.elem,"hide");
         break;
+    };
+  }
+
+  /**
+   * onKeydownHandler handles what happens when keys are pressed. If left arrow key is pressed,
+   * the previous picture is displayed, and if the right arrow key is pressed the next picture is displayed.
+   *
+   * @param {Event} e Keydown event
+   */
+  this.onKeydownHandler = function onKeydownHandler(e){
+    if(!_this.visible) return;
+
+    e = e || window.event;
+
+    // left arrow key
+    if (e.keyCode == '37') {
+      _this.setCurrIndex(_this.currIndex-1);
+      _this.displayCurrPhoto();
+    }
+    // right arrow key
+    else if (e.keyCode == '39') {
+      _this.setCurrIndex(_this.currIndex+1);
+      _this.displayCurrPhoto();
     }
   }
 
@@ -192,6 +216,7 @@ Lightbox.prototype.displayCurrPhoto = function displayCurrPhoto() {
   else
     this._removeClass(this.rightElem,"hide");
 
+  this.visible = true;
   this._removeClass(this.elem,"hide");
 }
 
@@ -200,6 +225,7 @@ Lightbox.prototype._createLightboxElem = function _createLightboxElem() {
   this.elem = document.createElement("div");
   this.elem.setAttribute("id", "lightbox");
   this.elem.addEventListener("click", this.onClickHandler);
+  window.addEventListener('keydown', this.onKeydownHandler);
   this._addClass(this.elem,"hide");
   this.parentElem.appendChild(this.elem);
   this._createContentElem();
