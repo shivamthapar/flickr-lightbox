@@ -20,7 +20,6 @@ Since I really wanted to focus on writing clean and solid code, I did not get th
 
 Feature       | Description | Basic Steps
 ------------- | ----------- | -----------
-Keyboard Shortcuts | See next, previous pictures using arrow keys | Event handlers on key presses
 Animations | Fade pictures in and out when displaying |  Changing CSS `opacity` over time
 Preloading | Preload the photo which immediately follows the current picture so navigating between pictures is smoother | Create hidden DOM element for next picture and load it while the lightbox is visible. Make it visible when the next button is clicked.
 Browser Compatibility | XHR requests in older versions of IE, certain JS functions used (i.e. addEventListener not supported in IE8) | Research, use Google, and make fixes...
