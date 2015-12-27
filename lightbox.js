@@ -274,13 +274,15 @@ Lightbox.prototype._removeClass = function _removeClass(elem, cls) {
  * @param {string} divId ID of DOM element to render Gallery in
  * @param {string} flickrApiKey Flickr API Key
  */
-function Gallery(divId, flickrApiKey) {
+function Gallery(divId) {
+  var FLICKR_API_KEY = "828ec158da9636c329c8478741095b24";
+
   var _this = this;
   this.div = document.getElementById(divId);
   this.flickrUser = this.div.getAttribute('data-flickr-user');
   this.flickrPhotoset = this.div.getAttribute('data-flickr-photoset');
   this.photos = [];
-  this.flickr = new Flickr(flickrApiKey);
+  this.flickr = new Flickr(FLICKR_API_KEY);
   this.lightbox = null;
 
   /**
