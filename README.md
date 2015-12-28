@@ -5,6 +5,12 @@ A simple Javascript (no jQuery!) library which allows you to make a gallery and 
 * [Live Demo](https://fiery-heat-4300.firebaseapp.com/) -- or open the file `/index.html` in your browser
 * [Documentation](https://fiery-heat-4300.firebaseapp.com/docs/) -- or open the file `/docs/index.html` in your browser
 
+# Features
+* Fetches photos from a Flickr photoset and creates a gallery with thumbnails
+* Clicking on thumbnail reveals a lightbox showing the fullsize picture and title
+* Arrows to navigate between pictures
+* Bonus: Use left and right arrow keys to navigate between pictures
+
 # Browser Compatibility
 This project was tested and works on Chrome 47.0, Firefox for Mac 43.0.2, Safari 8.0, and IE11. 
 
