@@ -110,16 +110,16 @@ function Lightbox(photos, parentElem) {
 
   /**
    * onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded.
-   * Also, the "preload" CSS class is removed from the Lightbox content, hiding the spinner and 
+   * Also, the 'preload' CSS class is removed from the Lightbox content, hiding the spinner and 
    * revealing the picture.
    *
    */
   this.onPhotoLoadHandler = function onPhotoLoadHandler() {
-    _this._removeClass(_this.contentElem, "preload");
-    _this.contentElem.style.marginTop = "-" + this.height/2 + "px";
-    _this.contentElem.style.marginLeft = "-" + this.width/2 + "px";
-    _this.leftElem.style.top = this.height/2+"px";
-    _this.rightElem.style.top = this.height/2+"px";
+    _this._removeClass(_this.contentElem, 'preload');
+    _this.contentElem.style.marginTop = '-' + this.height/2 + 'px';
+    _this.contentElem.style.marginLeft = '-' + this.width/2 + 'px';
+    _this.leftElem.style.top = this.height/2+'px';
+    _this.rightElem.style.top = this.height/2+'px';
   };
 
   /**
@@ -131,24 +131,24 @@ function Lightbox(photos, parentElem) {
    */
   this.onClickHandler = function onClickHandler(e) {
     switch(e.target.id){
-      case "lightbox-left-arrow":
+      case 'lightbox-left-arrow':
         _this.setCurrIndex(_this.currIndex-1);
         _this.displayCurrPhoto();
         break;
-      case "lightbox-right-arrow":
+      case 'lightbox-right-arrow':
         _this.setCurrIndex(_this.currIndex+1);
         _this.displayCurrPhoto();
         break;
-      case "lightbox-photo":
+      case 'lightbox-photo':
         break;
-      case "lightbox-title":
+      case 'lightbox-title':
         break;
-      case "lightbox-content":
+      case 'lightbox-content':
         break;
       default:
         // outside lightbox-content (i.e. click in the dark area)
         _this.visible = false;
-        _this._addClass(_this.elem,"hide");
+        _this._addClass(_this.elem,'hide');
         break;
     };
   }
@@ -185,7 +185,6 @@ function Lightbox(photos, parentElem) {
  * @param {number} idx Index of photo to display
  */
 Lightbox.prototype.setCurrIndex = function setCurrIndex(idx){
-  console.log("called: ", idx);
   if(idx < 0 || idx >= this.photos.length) return;
   this.currIndex = idx;
 }
@@ -193,7 +192,7 @@ Lightbox.prototype.setCurrIndex = function setCurrIndex(idx){
 /**
  * displayCurrPhoto displays current photo and title in the Lightbox
  * and makes the Lightbox visible. When called, it gives the Lightbox
- * content the CSS class "preload", which causes the spinner to be 
+ * content the CSS class 'preload', which causes the spinner to be 
  * shown. Then, when the picture is done loading, the onPhotoLoadHandler
  * removes this class, hiding the spinner and showing the picture.
  *
@@ -203,47 +202,47 @@ Lightbox.prototype.displayCurrPhoto = function displayCurrPhoto() {
   this._setTitleElem(this.photos[this.currIndex].title);
   this._createImgWrapper();
 
-  this._addClass(this.contentElem, "preload");
-  this.contentElem.setAttribute("style","");
+  this._addClass(this.contentElem, 'preload');
+  this.contentElem.setAttribute('style','');
 
   if(this.currIndex === 0)
-    this._addClass(this.leftElem, "hide");
+    this._addClass(this.leftElem, 'hide');
   else
-    this._removeClass(this.leftElem,"hide");
+    this._removeClass(this.leftElem,'hide');
 
   if(this.currIndex === this.photos.length-1)
-    this._addClass(this.rightElem, "hide");
+    this._addClass(this.rightElem, 'hide');
   else
-    this._removeClass(this.rightElem,"hide");
+    this._removeClass(this.rightElem,'hide');
 
   this.visible = true;
-  this._removeClass(this.elem,"hide");
+  this._removeClass(this.elem,'hide');
 }
 
 /* DOM Element Functions */
 Lightbox.prototype._createLightboxElem = function _createLightboxElem() {
-  this.elem = document.createElement("div");
-  this.elem.setAttribute("id", "lightbox");
-  this.elem.addEventListener("click", this.onClickHandler);
+  this.elem = document.createElement('div');
+  this.elem.setAttribute('id', 'lightbox');
+  this.elem.addEventListener('click', this.onClickHandler);
   window.addEventListener('keydown', this.onKeydownHandler);
-  this._addClass(this.elem,"hide");
+  this._addClass(this.elem,'hide');
   this.parentElem.appendChild(this.elem);
   this._createContentElem();
 }
 
 Lightbox.prototype._createContentElem = function _createContentElem() {
-  this.contentElem = document.createElement("div");
-  this.contentElem.setAttribute("id", "lightbox-content");
+  this.contentElem = document.createElement('div');
+  this.contentElem.setAttribute('id', 'lightbox-content');
   
-  this.leftElem = document.createElement("div");
-  this.leftElem.setAttribute("id", "lightbox-left-arrow");
+  this.leftElem = document.createElement('div');
+  this.leftElem.setAttribute('id', 'lightbox-left-arrow');
   this.contentElem.appendChild(this.leftElem);
-  this.rightElem = document.createElement("div");
-  this.rightElem.setAttribute("id", "lightbox-right-arrow");
+  this.rightElem = document.createElement('div');
+  this.rightElem.setAttribute('id', 'lightbox-right-arrow');
   this.contentElem.appendChild(this.rightElem);
 
-  this.spinnerElem = document.createElement("div");
-  this.spinnerElem.setAttribute("id", "lightbox-spinner");
+  this.spinnerElem = document.createElement('div');
+  this.spinnerElem.setAttribute('id', 'lightbox-spinner');
   this.contentElem.appendChild(this.spinnerElem);
 
   this.elem.appendChild(this.contentElem);
@@ -251,8 +250,8 @@ Lightbox.prototype._createContentElem = function _createContentElem() {
 
 Lightbox.prototype._createImgWrapper = function createImgWrapper() {
   if(!this.imgWrapper){
-    this.imgWrapper = document.createElement("div");
-    this.imgWrapper.setAttribute("id", "lightbox-img-wrapper");
+    this.imgWrapper = document.createElement('div');
+    this.imgWrapper.setAttribute('id', 'lightbox-img-wrapper');
     this.imgWrapper.appendChild(this.photoElem);
     this.imgWrapper.appendChild(this.titleElem);
     this.contentElem.appendChild(this.imgWrapper);
@@ -261,34 +260,34 @@ Lightbox.prototype._createImgWrapper = function createImgWrapper() {
 
 Lightbox.prototype._setPhotoElem = function _setPhotoElem(url) {
   if(!this.photoElem){
-    this.photoElem = document.createElement("img");
-    this.photoElem.setAttribute("id", "lightbox-photo");
+    this.photoElem = document.createElement('img');
+    this.photoElem.setAttribute('id', 'lightbox-photo');
   }
-  this.photoElem.setAttribute("src", url);
+  this.photoElem.setAttribute('src', url);
   this.photoElem.onload = this.onPhotoLoadHandler;
 }
 
 Lightbox.prototype._setTitleElem = function _setTitleElem(text) {
   if(!this.titleElem){
-    this.titleElem = document.createElement("p");
-    this.titleElem.setAttribute("id", "lightbox-title");
+    this.titleElem = document.createElement('p');
+    this.titleElem.setAttribute('id', 'lightbox-title');
   }
   this.titleElem.textContent = text;
 }
 
 /* CSS Helper Functions */
 Lightbox.prototype._hasClass = function _hasClass(elem, cls) {
-  var regex = new RegExp("\\b" + cls + "\\b");
-  return !!(elem.className.match(regex, ""));
+  var regex = new RegExp('\\b' + cls + '\\b');
+  return !!(elem.className.match(regex, ''));
 }
 
 Lightbox.prototype._addClass = function _addClass(elem, cls) {
   if(this._hasClass(elem, cls)) return;
-  elem.className += " " + cls;
+  elem.className += ' ' + cls;
 }
 Lightbox.prototype._removeClass = function _removeClass(elem, cls) {
-  var regex = new RegExp("\\b" + cls + "\\b");
-  elem.className = elem.className.replace(regex, "")
+  var regex = new RegExp('\\b' + cls + '\\b');
+  elem.className = elem.className.replace(regex, '')
 }
 
 /**
@@ -301,7 +300,7 @@ Lightbox.prototype._removeClass = function _removeClass(elem, cls) {
  * @param {string} flickrApiKey Flickr API Key
  */
 function Gallery(divId) {
-  var FLICKR_API_KEY = "828ec158da9636c329c8478741095b24";
+  var FLICKR_API_KEY = '828ec158da9636c329c8478741095b24';
 
   var _this = this;
   this.div = document.getElementById(divId);
@@ -317,7 +316,7 @@ function Gallery(divId) {
    *
    */
   this.onThumbClickHandler = function(){
-    _this.lightbox.setCurrIndex(parseInt(this.getAttribute("id")));
+    _this.lightbox.setCurrIndex(parseInt(this.getAttribute('id')));
     _this.lightbox.displayCurrPhoto();
   };
 
@@ -339,7 +338,7 @@ Gallery.prototype.fetchImages = function fetchImages() {
       _this.lightbox = new Lightbox(_this.photos, _this.div);
     }
     else{
-      console.log("error: ", data.msg);
+      console.log('error: ', data.msg);
     }
   });
 }
@@ -352,15 +351,15 @@ Gallery.prototype.fetchImages = function fetchImages() {
  */
 Gallery.prototype.createGrid = function createGrid() {
   var _this = this;
-  var grid = document.createElement("div");
-  grid.setAttribute("id", "lightbox-grid");
+  var grid = document.createElement('div');
+  grid.setAttribute('id', 'lightbox-grid');
   this.photos.forEach(function(photo, i){
-    var p = document.createElement("img");
-    p.setAttribute("class", "lightbox-thumb");
-    p.setAttribute("id", i);
-    p.setAttribute("src", photo.thumb);
-    p.setAttribute("data-large", photo.url);
-    p.addEventListener("click", _this.onThumbClickHandler, false);
+    var p = document.createElement('img');
+    p.setAttribute('class', 'lightbox-thumb');
+    p.setAttribute('id', i);
+    p.setAttribute('src', photo.thumb);
+    p.setAttribute('data-large', photo.url);
+    p.addEventListener('click', _this.onThumbClickHandler, false);
     grid.appendChild(p);
   });
   this.div.appendChild(grid);
