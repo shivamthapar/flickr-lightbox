@@ -2,8 +2,8 @@
 
 A simple Javascript (no jQuery!) library which allows you to make a gallery and lightbox to view a Flickr photo album.
 
-* [Live Demo](https://fiery-heat-4300.firebaseapp.com/)
-* [Documentation](https://fiery-heat-4300.firebaseapp.com/docs/)
+* [Live Demo](https://fiery-heat-4300.firebaseapp.com/) -- or open the file `/index.html` in your browser
+* [Documentation](https://fiery-heat-4300.firebaseapp.com/docs/) -- or open the file `/docs/index.html` in your browser
 
 # Browser Compatibility
 This project was tested and works on Chrome 47.0, Firefox for Mac 43.0.2, Safari 8.0, and IE11. 
