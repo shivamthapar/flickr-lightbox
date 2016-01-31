@@ -1,34 +1,38 @@
-img.lightbox-thumb{
-  padding: 10px;
-  border: 2px solid #E2E2E2;
-  margin: 2px;
-  cursor: pointer;
+.lightbox-thumb {
+  padding: 1px;
+  border: 1.5px solid rgba(0, 0, 0, .75);;
+  margin: 5px;
+  -webkit-filter: saturate(0.5) opacity(.5);
+  filter: saturate(0.5) opacity(10px);
+
 }
 
-div#lightbox{
+.lightbox-thumb:hover {
+  padding: 1px;
+  border: 1.5px solid rgba(0, 0, 0, .75);;
+  margin: 5px;
+    -webkit-filter: saturate(1.5) opacity(1);
+    filter: saturate(1.5) opacity(1);
+}
+#lightbox {
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  
-  /* Translucent background (with help from http://rland.me.uk/cross-browser-alpha-transparent-background-10-2011/) */
-  background:rgb(0,0,0);
-  background: transparent\9; /* IE fix*/
-  background:rgba(0,0,0,0.8);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000,endColorstr=#CC000000); /* IE Fix */
-  zoom: 1;
-}
-/* IE Fix for Background Translucency */
-div#lightbox:nth-child(n) {
-    filter: none;
+  background: rgba(0, 0, 0, .75);
+
 }
 
-.hide{
+/* IE Fix for Background Translucency */
+
+#lightbox:nth-child(n) {
+  filter: none;
+}
+.hide {
   display: none !important;
 }
-
-div#lightbox div#lightbox-content{
+#lightbox-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -37,14 +41,12 @@ div#lightbox div#lightbox-content{
   display: table;
   background: #ffffff;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 2.5px;
 }
-
-div#lightbox div#lightbox-content div#lightbox-img-wrapper{
-  display:table;
+#lightbox #lightbox-content #lightbox-img-wrapper {
+  display: table;
 }
-
-div#lightbox div#lightbox-content p#lightbox-title{
+#lightbox #lightbox-content p#lightbox-title {
   text-align: center;
   color: #484848;
   font-size: 18px;
@@ -54,12 +56,10 @@ div#lightbox div#lightbox-content p#lightbox-title{
   display: table-caption;
   caption-side: bottom;
 }
-
-div#lightbox div#lightbox-content img#lightbox-photo{
+#lightbox #lightbox-content img#lightbox-photo {
   display: inline;
 }
-
-div#lightbox div#lightbox-content div#lightbox-left-arrow{
+#lightbox #lightbox-content #lightbox-left-arrow {
   display: block;
   background-image: url('img/arrow-left.png');
   width: 33px;
@@ -68,8 +68,7 @@ div#lightbox div#lightbox-content div#lightbox-left-arrow{
   left: 10px;
   cursor: pointer;
 }
-
-div#lightbox div#lightbox-content div#lightbox-right-arrow{
+#lightbox #lightbox-content #lightbox-right-arrow {
   background-image: url('img/arrow-right.png');
   width: 33px;
   height: 43px;
@@ -77,8 +76,7 @@ div#lightbox div#lightbox-content div#lightbox-right-arrow{
   right: 10px;
   cursor: pointer;
 }
-
-div#lightbox div#lightbox-content div#lightbox-spinner{
+#lightbox #lightbox-content #lightbox-spinner {
   background: url('img/ajax-loader.gif');
   display: none;
   width: 16px;
@@ -89,24 +87,26 @@ div#lightbox div#lightbox-content div#lightbox-spinner{
 }
 
 /** Before Image Loaded Styles **/
-div#lightbox div#lightbox-content.preload{
+
+#lightbox #lightbox-content.preload {
   width: 250px;
   height: 250px;
   margin-left: -125px;
   margin-top: -125px;
+
 }
-div#lightbox div#lightbox-content.preload img#lightbox-photo{
+#lightbox #lightbox-content.preload img#lightbox-photo {
   display: none;
 }
-div#lightbox div#lightbox-content.preload p#lightbox-title{
+#lightbox #lightbox-content.preload p#lightbox-title {
   display: none;
 }
-div#lightbox div#lightbox-content.preload div#lightbox-left-arrow{
+#lightbox #lightbox-content.preload #lightbox-left-arrow {
   display: none;
 }
-div#lightbox div#lightbox-content.preload div#lightbox-right-arrow{
+#lightbox #lightbox-content.preload #lightbox-right-arrow {
   display: none;
 }
-div#lightbox div#lightbox-content.preload div#lightbox-spinner{
+#lightbox #lightbox-content.preload #lightbox-spinner {
   display: block;
 }
