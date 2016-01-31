@@ -110,7 +110,7 @@ function Lightbox(photos, parentElem) {
 
   /**
    * onPhotoLoadHandler centers the Lightbox content when a picture is fully loaded.
-   * Also, the 'preload' CSS class is removed from the Lightbox content, hiding the spinner and 
+   * Also, the 'preload' CSS class is removed from the Lightbox content, hiding the spinner and
    * revealing the picture.
    *
    */
@@ -123,7 +123,7 @@ function Lightbox(photos, parentElem) {
   };
 
   /**
-   * onClickHandler handles what happens when the Lightbox is clicked. If the arrows 
+   * onClickHandler handles what happens when the Lightbox is clicked. If the arrows
    * are clicked, the next or previous picture is displayed. If the dark area (outside
    * the Lightbox content) is clicked, the Lightbox is hidden.
    *
@@ -192,7 +192,7 @@ Lightbox.prototype.setCurrIndex = function setCurrIndex(idx){
 /**
  * displayCurrPhoto displays current photo and title in the Lightbox
  * and makes the Lightbox visible. When called, it gives the Lightbox
- * content the CSS class 'preload', which causes the spinner to be 
+ * content the CSS class 'preload', which causes the spinner to be
  * shown. Then, when the picture is done loading, the onPhotoLoadHandler
  * removes this class, hiding the spinner and showing the picture.
  *
@@ -233,7 +233,7 @@ Lightbox.prototype._createLightboxElem = function _createLightboxElem() {
 Lightbox.prototype._createContentElem = function _createContentElem() {
   this.contentElem = document.createElement('div');
   this.contentElem.setAttribute('id', 'lightbox-content');
-  
+
   this.leftElem = document.createElement('div');
   this.leftElem.setAttribute('id', 'lightbox-left-arrow');
   this.contentElem.appendChild(this.leftElem);
@@ -323,7 +323,7 @@ function Gallery(divId) {
 }
 
 /**
- * fetchImages fetches photos from the Gallery's photoset. If the API call is 
+ * fetchImages fetches photos from the Gallery's photoset. If the API call is
  * successful, it creates a grid of thumbnails of the photos. Otherwise, it logs
  * an error message.
  *
@@ -344,7 +344,7 @@ Gallery.prototype.fetchImages = function fetchImages() {
 
 /**
  * createGrid creates a grid of thumbnails of all the gallery's photos, and attaches
- * it to the DOM. Each thumbnail also has a reference to the url of its fullsize 
+ * it to the DOM. Each thumbnail also has a reference to the url of its fullsize
  * photo under the attribute 'data-large'.
  *
  */
@@ -384,4 +384,3 @@ Gallery.prototype.createGrid = function createGrid() {
  * @param {Photo[]} data.photos Array of photos of the photoset, if call succeeded
  * @param {string} data.msg Description of error if API call failed
  */
-

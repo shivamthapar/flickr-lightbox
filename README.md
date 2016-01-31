@@ -2,7 +2,7 @@
 
 A simple Javascript (no jQuery!) library which allows you to make a gallery and lightbox to view a Flickr photo album.
 
-* [Live Demo](https://fiery-heat-4300.firebaseapp.com/) -- or open the file `/index.html` in your browser
+* [Live Demo](frail-burst.surge.sh) -- or open the file `/index.html` in your browser
 * [Documentation](https://fiery-heat-4300.firebaseapp.com/docs/) -- or open the file `/docs/index.html` in your browser
 
 # Features
@@ -29,9 +29,9 @@ See [index.html](https://github.com/shivamthapar/flickr-lightbox/blob/master/ind
 ```
 
 ## Getting Flickr IDs
-* You can use [http://idgettr.com/](http://idgettr.com/) to find a Flickr User ID. 
-* A Flickr Photoset's ID can be found by looking at the end of the url of an album page on Flickr. For example, [this album](https://www.flickr.com/photos/parismadrid/sets/72157649350793497) has a Photoset ID of 72157649350793497, since its URL is: 
+* You can use [http://idgettr.com/](http://idgettr.com/) to find a Flickr User ID.
+* A Flickr Photoset's ID can be found by looking at the end of the url of an album page on Flickr. For example, [this album](https://www.flickr.com/photos/parismadrid/sets/72157649350793497) has a Photoset ID of 72157649350793497, since its URL is:
 `https://www.flickr.com/photos/parismadrid/sets/72157649350793497`
 
 # Browser Compatibility
-This project was tested and works on Chrome 47.0, Firefox for Mac 43.0.2, Safari 8.0, and IE11. 
+This project was tested and works on Chrome 47.0, Firefox for Mac 43.0.2, Safari 8.0, and IE11.
