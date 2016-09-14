@@ -1,11 +1,18 @@
 body {
   margin: 40px auto;
-  max-width: 650px;
+  max-width: 60%;
   line-height: 1.6;
   font-size: 18px;
   color: #444;
-  padding: 0 10px
+  text-align:center;
 }
 h1, h2, h3 {
   line-height: 1.2
+}
+
+img, canvas, iframe, video, svg, select, textarea {
+  max-width: 100%;}
+
+.title {
+font-family: sans-serif; color: #1D1D1D;
 }
