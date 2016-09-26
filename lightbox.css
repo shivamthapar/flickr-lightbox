@@ -1,16 +1,15 @@
+
 .lightbox-thumb {
-  padding: 1px;
-  border: 1.5px solid rgba(0, 0, 0, .75);;
-  margin: 5px;
+  border: 1.5px solid rgba(0, 0, 0, .75);
   -webkit-filter: saturate(0.5) opacity(.5);
   filter: saturate(0.5) opacity(10px);
+  margin: .5em;
+  width: 6em;
 
 }
 
 .lightbox-thumb:hover {
-  padding: 1px;
-  border: 1.5px solid rgba(0, 0, 0, .75);;
-  margin: 5px;
+  border: 1.5px solid rgba(0, 0, 0, .75);
     -webkit-filter: saturate(1.5) opacity(1);
     filter: saturate(1.5) opacity(1);
 }
