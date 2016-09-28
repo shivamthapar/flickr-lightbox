@@ -2,7 +2,7 @@
 
 A simple Javascript (no jQuery!) library which allows you to make a gallery and lightbox to view a Flickr photo album.
 
-* [Live Demo](flickr-lightbox.surge.sh) -- or open the file `/index.html` in your browser
+* [Live Demo](http://flickr-lightbox.surge.sh) -- or open the file `/index.html` in your browser
 * [Documentation](https://fiery-heat-4300.firebaseapp.com/docs/) -- or open the file `/docs/index.html` in your browser
 
 # Features
